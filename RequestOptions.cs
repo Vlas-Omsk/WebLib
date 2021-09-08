@@ -50,7 +50,7 @@ namespace WebLib
             return result;
         }
 
-        internal HttpWebRequest GetHttpWebRequest()
+        public HttpWebRequest GetHttpWebRequest()
         {
             if (!Uri.IsWellFormedUriString(Url, UriKind.RelativeOrAbsolute))
                 throw new UriFormatException();

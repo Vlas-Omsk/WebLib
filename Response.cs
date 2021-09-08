@@ -9,22 +9,11 @@ namespace WebLib
     public class Response
     {
         public string Content { get; internal set; }
-        public WebHeaderCollection Headers { get; internal set; }
+        public WebHeaderCollection Headers => WebResponse.Headers;
         public bool IsHaveErrors { get; internal set; }
-        public HttpStatusCode StatusCode { get; internal set; }
+        public HttpStatusCode StatusCode => WebResponse.StatusCode;
 
-        internal void SetHeaders(WebHeaderCollection collection)
-        {
-            Headers = collection;
-            //var headers = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
-            //for (int i = 0; i < collection.Count; ++i)
-            //{
-            //    string key = collection.GetKey(i);
-            //    foreach (string value in collection.GetValues(i))
-            //        headers.Add(key, value);
-            //}
-            //Headers = headers;
-        }
+        public HttpWebResponse WebResponse { get; internal set; }
 
         public Json GetJson()
         {

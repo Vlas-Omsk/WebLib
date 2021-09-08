@@ -29,12 +29,12 @@ namespace WebLib
             } catch (WebException ex)
             {
                 webresponse = (HttpWebResponse)ex.Response;
+                response.IsHaveErrors = true;
             }
 
+            response.WebResponse = webresponse;
             using (Stream s = webresponse.GetResponseStream())
             {
-                response.StatusCode = webresponse.StatusCode;
-                response.SetHeaders(webresponse.Headers);
                 using (StreamReader sr = new StreamReader(s))
                     response.Content = sr.ReadToEnd();
             }
