@@ -41,17 +41,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Http.cs" />
+    <Compile Include="HttpRequest.cs" />
+    <Compile Include="HttpResponse.cs" />
     <Compile Include="HttpWebRequestExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RequestOptions.cs" />
-    <Compile Include="Response.cs" />
-    <Compile Include="Web.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\PinkJson\PinkJson\PinkJson.csproj">
-      <Project>{94acfcd4-6447-4b17-b1b5-ff9451cc874a}</Project>
-      <Name>PinkJson</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
