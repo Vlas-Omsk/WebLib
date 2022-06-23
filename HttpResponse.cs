@@ -8,37 +8,36 @@ namespace WebLib
     {
         public HttpWebResponse HttpWebResponse { get; }
         public bool HaveErrors { get; }
-        public WebHeaderCollection Headers => HttpWebResponse.Headers;
-        public HttpStatusCode StatusCode => HttpWebResponse.StatusCode;
+        public WebException WebException { get; }
 
-        public HttpResponse(HttpWebResponse httpWebResponse) : this(httpWebResponse, false)
+        public HttpResponse(HttpWebResponse httpWebResponse) : this(httpWebResponse, false, null)
         {
         }
 
-        public HttpResponse(HttpWebResponse httpWebResponse, bool haveErrors)
+        public HttpResponse(HttpWebResponse httpWebResponse, bool haveErrors, WebException webException)
         {
             HttpWebResponse = httpWebResponse;
             HaveErrors = haveErrors;
+            WebException = webException;
         }
+
+        public WebHeaderCollection Headers => HttpWebResponse.Headers;
+        public HttpStatusCode StatusCode => HttpWebResponse.StatusCode;
 
         public string GetText()
         {
             using (Stream stream = GetStream())
-            {
-                using (StreamReader streamReader = new StreamReader(stream))
-                    return streamReader.ReadToEnd();
-            }
+            using (StreamReader streamReader = new StreamReader(stream))
+                return streamReader.ReadToEnd();
         }
 
         public byte[] GetBytes(int bufferSize = 81920)
         {
             using (Stream stream = GetStream())
+            using (MemoryStream memoryStream = new MemoryStream())
             {
-                using (MemoryStream memoryStream = new MemoryStream())
-                {
-                    stream.CopyTo(memoryStream, bufferSize);
-                    return memoryStream.ToArray();
-                }
+                stream.CopyTo(memoryStream, bufferSize);
+                return memoryStream.ToArray();
             }
         }
 

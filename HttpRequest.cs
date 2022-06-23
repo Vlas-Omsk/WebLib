@@ -24,14 +24,19 @@ namespace WebLib
         public Stream Data { get; set; }
         public CookieContainer CookieContainer { get; set; } = new CookieContainer();
 
-        public void AddHeader(string name, object value)
+        public void SetHeader(string name, object value)
         {
-            Headers.Add(name, value);
+            Headers[name] = value;
         }
 
-        public void AddQueryParam(string key, object value)
+        public void SetQueryParam(string key, string value)
         {
-            Query.Add(key, value.ToString());
+            Query[key] = value.ToString();
+        }
+
+        public void SetQueryParam(string key, object value)
+        {
+            SetQueryParam(key, value.ToString());
         }
 
         public void SetData(byte[] data)
@@ -59,7 +64,7 @@ namespace WebLib
             Path = new List<string>(path.Trim('/').Split('/'));
         }
 
-        private string CreateQueryString(Dictionary<string, string> collection)
+        private static string CreateQueryString(Dictionary<string, string> collection)
         {
             string result = string.Empty;
 
@@ -83,7 +88,7 @@ namespace WebLib
             if (string.IsNullOrEmpty(Url))
                 throw new UriFormatException("Empty url");
             string url = Url + 
-                (Url[Url.Length - 1] == '/' ? string.Empty : "/") + 
+                /*(Url[Url.Length - 1] == '/' ? string.Empty : "/") +*/ 
                 string.Join("/", Path.Select(item => Uri.EscapeDataString(item)));
             if (!Uri.IsWellFormedUriString(url, UriKind.RelativeOrAbsolute))
                 throw new UriFormatException();

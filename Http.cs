@@ -41,7 +41,7 @@ namespace WebLib
             }
             catch (WebException ex)
             {
-                response = new HttpResponse((HttpWebResponse)ex.Response, true);
+                response = new HttpResponse((HttpWebResponse)ex.Response, true, ex);
             }
 
             return response;
